@@ -1,0 +1,44 @@
+html, body {
+	height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+	background: 
+		linear-gradient(
+			rgba(78, 205, 196, 0.95),
+			rgba(78, 205, 196, 0.45)
+		),
+		url("../img/rsz_samuel-zeller-118195-unsplash.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: 100% 100%;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+    /*background: #4ECDC4;*/
+	/*background-color:rgba(78, 205, 196, 0.5);*/
+}
+
+#pagina-login {
+	width: 500px;
+}
+
+.login-form{
+	padding: 10px;
+}
+
+.card {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-moz-transform: translate(-50%, -50%)
+	-webkit-transform: translate(-50%, -50%)
+	-ms-transform: translate(-50%, -50%)
+	-o-transform: translate(-50%, -50%)
+	transform: translate(-50%, -50%);
+}
