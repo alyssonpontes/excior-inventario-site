@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<link href="css/bootstrap-table.min.css" rel="stylesheet">
+		<script src="js/bootstrap-table.min.js"></script>	
+		
+		
+	</head>
+
+	<body>
+	
+
+		<table id="table"
+		  data-striped="true"
+		  data-show-export="true"
+		>
+		  <thead>
+			<tr>
+			  <th data-field="id_empresa">Empresa</th>
+			  <th data-field="id_usuario">Usuario</th>
+			  <th data-field="nome_fantasia">Nome</th>
+			  <th data-field="razao_social">Razao</th>
+			  <th data-field="codigo">Codigo</th>
+			</tr>
+		  </thead>
+		</table>
+
+
+		<script language="javascript">
+		
+		$(function() {
+			var usuario = {metodo:'validarUsuario', email:'alyssonpontes@gmail.com', senha:'pontes'};
+			var data2 = '';
+			$.ajax({
+				type: 'POST',
+				url: 'php/metodos.php',
+				dataType: 'json',
+				data: usuario,
+				success: function(response) {
+					$('#table').bootstrapTable({data: response});
+				},
+				failure: function (response) {
+					alert('erro');
+					alert(response);
+				}
+			});
+		});
+</script>
+
+		</body>
+</html>
