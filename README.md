@@ -8,8 +8,8 @@ Repositório de arquivos do site feito em php + mysql do projeto de inventário
 - PHP
 - MySQL
 
-#Layout
+# Layout
 - Materialize (https://materializecss.com/)
 
-#PHP Plugin
+# PHP Plugin
 - PHPMailer
