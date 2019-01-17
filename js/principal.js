@@ -10,11 +10,14 @@ $( document ).ready(function() {
 	});
    
 	$('.modal').modal();
+  
+	if (!sessionStorage.getItem("id_usuario") || !sessionStorage.getItem("nome")){
+		sessionStorage.clear();
+		window.location = "login.html";
+	}
 
 	$("#id_usuario").val(sessionStorage.getItem("id_usuario"));
 	$("#nome").val(sessionStorage.getItem("nome"));
-   
-   
 	
 });
 

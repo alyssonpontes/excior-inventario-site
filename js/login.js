@@ -1,3 +1,6 @@
+$(document).ready(function(){
+	$('.modal').modal();
+});
 
 $('#btnEntrar').on('click',function(){
 	
@@ -32,6 +35,31 @@ $('#btnEntrar').on('click',function(){
 		}
 	});
 	
-	
-	
 });
+
+$('#btnEnviar').on('click',function(){
+	
+	var email = $('#email-recup').val();
+	var teste = {metodo:'recuperarSenhaUsuario', email:email};
+	
+	$.ajax({
+		type: 'POST',
+		url: 'php/metodos.php',
+		data: teste,
+		success: function(response) {
+			/*var obj = JSON.parse(response);
+			if (obj['erro'] == true){
+				M.toast({html: obj['erro_desc']});
+			}else{
+				sessionStorage.setItem("id_usuario", obj['id_usuario']);
+				sessionStorage.setItem("nome", obj['nome']);
+				window.location = "principal.html";
+			}*/
+			alert(response);
+		},
+		failure: function (response) {
+			alert('Erro AJAX: ' + response);
+		}
+	});
+	
+});	
