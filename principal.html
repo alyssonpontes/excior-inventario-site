@@ -24,12 +24,41 @@
 					<a id="sair" class="modal-close waves-effect waves-light btn red">Sair</a>
 				</div>
 			</div>
+			
+			<!-- Modal Structure @TROCAR SENHA -->
+			<div id="modal-trocar-senha" class="modal">
+				<div class="modal-content">
+					<h4>Trocar Senha</h4>
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix">lock_outline</i>
+							<input id="nova-senha" type="password">
+							<label for="nova-senha">Nova Senha</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix">lock_outline</i>
+							<input id="repetir-nova-senha" type="password">
+							<label for="repetir-nova-senha">Repira a Nova Senha</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a id="trocar-nova-senha" class="modal-action waves-effect waves-light btn green">Trocar</a>
+				</div>
+			</div>
+
+
+
+
 
 			<!-- Dropdown Structure @MENU -->
 			<ul id="dropdown1" class="dropdown-content">
 				<li><a href="#!">one</a></li>
 				<li><a href="#!">two</a></li>
 				<li class="divider"></li>
+				<li><a href="#modal-trocar-senha" class="modal-trigger">Trocar Senha</a></li>
 				<li><a href="#modal-sair" class="modal-trigger">Sair</a></li>
 			</ul>
 
@@ -42,7 +71,7 @@
 						<!-- Dropdown Trigger -->
 						<li>
 							<a class="dropdown-trigger" href="#!" data-target="dropdown1">
-								Dropdown
+								Meu Perfil
 								<i class="material-icons right">arrow_drop_down</i>
 							</a>
 						</li>
