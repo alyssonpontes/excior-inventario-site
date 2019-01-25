@@ -41,7 +41,7 @@
 					
 					<div class="row">
 						<div class="input-field col s6 m6 l6">
-							<p class="margin medium-small"><a href="#">Registre-se!</a></p>
+							<p class="margin medium-small"><a href="#modal-registre-se" class="modal-trigger">Registre-se!</a></p>
 						</div>
 						<div class="input-field col s6 m6 l6">
 							<p class="margin right-align medium-small"><a href="#modal-recuperar-senha" class="modal-trigger">Esqueci a senha?</a></p>
@@ -70,8 +70,69 @@
 			</div>
 		</div>
 		
+		<!-- Modal Structure @REGISTRE-SE -->
+		<div id="modal-registre-se" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<h4>Registre-se</h4>
+				<p>Informe os seus dados abaixo para que você rebeca sua senha inicial por e-mail.</p>
+				<div class="row">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">mail_outline</i>
+						<input class="validate registre-se" id="reg-email" type="email" required="required">
+						<label for="reg-email" data-error="wrong" data-success="right">E-mail</label>
+					</div>
+					<div class="input-field col s10">
+						<i class="material-icons prefix">person</i>
+						<input class="validate registre-se" id="reg-nome" type="text" required="required">
+						<label for="reg-nome" data-error="wrong" data-success="right">Nome</label>
+					</div>
+					<div class="input-field col s10">
+						<i class="material-icons prefix">business</i>
+						<input class="validate registre-se" id="reg-empresa" type="text" required="required">
+						<label for="reg-empresa" data-error="wrong" data-success="right">Empresa</label>
+					</div>
+					<div class="input-field col s9">
+						<i class="material-icons prefix">edit</i>
+						<input class="validate registre-se" id="reg-endereco" type="text" required="required">
+						<label for="reg-endereco" data-error="wrong" data-success="right">Endreço</label>
+					</div>
+					<div class="input-field col s3">
+						<input class="validate registre-se" id="reg-numero" type="text" required="required">
+						<label for="reg-numero" data-error="wrong" data-success="right">Número</label>
+					</div>
+					<div class="input-field col s8">
+						<i class="material-icons prefix">edit</i>
+						<input class="validate registre-se" id="reg-complemento" type="text">
+						<label for="reg-complemento" data-error="wrong" data-success="right">Complemento</label>
+					</div>
+					<div class="input-field col s9">
+						<i class="material-icons prefix">edit</i>
+						<input class="validate registre-se" id="reg-cidade" type="text" required="required">
+						<label for="reg-cidade" data-error="wrong" data-success="right">Cidade</label>
+					</div>
+					<div class="input-field col s3">
+						<input class="validate registre-se" id="reg-uf" type="text" maxlength="2" pattern="[A-Z]{2}" required="required">
+						<label for="reg-uf" data-error="wrong" data-success="right">UF (exemplo: SP)</label>
+					</div>
+					<div class="input-field col s6">
+						<i class="material-icons prefix">place</i>
+						<input class="validate registre-se" id="reg-cep" type="text" maxlength="9" pattern="\d{5}-?\d{3}" required="required">
+						<label for="reg-cep" data-error="wrong" data-success="right">CEP 99999-999</label>
+					</div>
+					<div class="input-field col s6">
+						<i class="material-icons prefix">phone</i>
+						<input class="validate registre-se" id="reg-telefone" type="text" maxlength="15" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" required="required"> 
+						<label for="reg-telefone" data-error="wrong" data-success="right">Telefone (99) 99999-9999</label>
+					</div>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<a id="btnRegistrar" class="modal-action waves-effect waves-green btn">Registrar</a>
+			</div>
+		</div>
+		
 		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/login.js" charset="utf-8"></script>
 	</body>
 </html>

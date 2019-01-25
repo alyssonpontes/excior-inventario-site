@@ -62,3 +62,63 @@ $('#btnEnviar').on('click',function(){
 	});
 	
 });	
+
+$('#btnRegistrar').on('click',function(){
+	
+	var registroValido = true;
+	var registroValidoObj;
+	var registroValores = "{";
+	
+	$(".registre-se").each(function(){
+		
+		if (registroValido && $(this)[0].checkValidity() === false){
+			
+			registroValido = false;
+			registroValidoObj = $(this)
+		
+		}
+		
+		registroValores += "\"" + $(this).attr('id') + "\":\"" + $(this).val() + "\",";
+	
+	});
+	
+	registroValores = registroValores.substring(0, registroValores.length - 1);
+	registroValores += "}";
+	registroValores = JSON.parse(registroValores);
+	
+	if (registroValido){
+		
+		var dados = {metodo:'registrarUsuario', };
+		dados = {...dados, ...registroValores};
+		
+		$.ajax({
+			type: 'POST',
+			url: 'php/metodos.php',
+			data: dados,
+			success: function(response) {
+				var obj = JSON.parse(response);
+				if (obj['erro'] == true){
+					M.toast({html: obj['erro_desc']});
+				}else{
+					M.toast({html: obj['erro_desc']});
+					$('#modal-registre-se').close();
+				}
+			},
+			failure: function (response) {
+				alert('Erro AJAX: ' + response);
+			}
+		});
+		
+	} else {
+		
+		var label = $("label[for='" + registroValidoObj.attr('id') + "']");
+		M.toast({html: 'Erro de preenchimento no campo:' + label.text()});
+		registroValidoObj.focus();
+		
+	}
+	
+});
+
+
+
+

@@ -265,6 +265,31 @@ function trocarSenhaUsuario($var){
 
 }
 
+function registrarUsuario($var){
+	
+	$valEmail = auxValidarEmailCadastrado($var['reg-email']);
+	
+	if ($valEmail){
+	
+		$ret = [
+			"erro" => true,
+			"erro_desc" => 'E-mail já cadastrado na nossa base, utilize o lembrar senha!'
+		];
+		
+	} else {
+		
+		$ret = [
+			"erro" => true,
+			"erro_desc" => $var['reg-email']
+		];
+		
+	}
+		
+	$ret = array_map('utf8_encode',$ret);
+	echo json_encode($ret);
+	
+}
+
 //////////// @FUNÇOES ATUXILIARES /////////////////
 
 function auxValidarEmail($email){
@@ -426,6 +451,32 @@ function auxGerarNovaSenha($length = 8) {
     }
 	
     return $randomString;
+	
+}
+
+function auxValidarEmailCadastrado($email){
+	
+	global $dbconn;
+	$sql = "SELECT id_usuario, nome
+			FROM usuarios
+			WHERE email = :email";
+	
+	$stmt = $dbconn->prepare($sql);
+	$stmt->bindParam(':email', $email);
+	
+	$result = $stmt->execute();
+	$count = $stmt->rowCount();
+	$data = $stmt->fetch(PDO::FETCH_ASSOC);	
+	
+	if ($count == 0){
+		
+		return false;
+		
+	}else{
+	
+		return true;
+	
+	}
 	
 }
 
