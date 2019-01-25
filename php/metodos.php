@@ -148,14 +148,16 @@ function gerarNovaSenhaUsuario($email){
 	
 	$senha = auxGerarNovaSenha();
 	$senha_base64 = base64_encode($senha);	
+	$situacao = 'Ativo';
 	
 	global $dbconn;
 	$sql = "UPDATE usuarios 
-			SET senha = :senha 
+			SET senha = :senha, situacao = :situacao
 			WHERE email = :email";
 
 	$stmt = $dbconn->prepare($sql);
 	$stmt->bindParam(':email', $email);
+	$stmt->bindParam(':situacao', $situacao);
 	$stmt->bindParam(':senha', $senha_base64);
 		
 	$result = $stmt->execute();
@@ -278,10 +280,119 @@ function registrarUsuario($var){
 		
 	} else {
 		
-		$ret = [
-			"erro" => true,
-			"erro_desc" => $var['reg-email']
-		];
+		global $dbconn;
+		$sql = "INSERT INTO usuarios
+					(email, senha, nome, 
+					empresa, endereco, endereco_numero, 
+					endereco_complemento, endereco_cidade, endereco_uf, 
+					endereco_cep, telefone, situacao, 
+					chave_nova_senha, chave_nova_senha_valida)
+				VALUES
+					(:email, :senha, :nome, 
+					:empresa, :endereco, :endereco_numero, 
+					:endereco_complemento, :endereco_cidade, :endereco_uf, 
+					:endereco_cep, :telefone, :situacao, 
+					:chave_nova_senha, :chave_nova_senha_valida)";
+		
+		$senha = 'nova-senha';
+		$situacao = 'Inativo';
+		$chave_nova_senha = null;
+		$chave_nova_senha_valida = 'Nao';
+		
+		$stmt = $dbconn->prepare($sql);
+		$stmt->bindParam(':email', $var['reg-email']);
+		$stmt->bindParam(':senha', $senha);
+		$stmt->bindParam(':nome', $var['reg-nome']);
+		$stmt->bindParam(':empresa', $var['reg-empresa']);
+		$stmt->bindParam(':endereco', $var['reg-endereco']);
+		$stmt->bindParam(':endereco_numero', $var['reg-numero']);
+		$stmt->bindParam(':endereco_complemento', $var['reg-complemento']);
+		$stmt->bindParam(':endereco_cidade', $var['reg-cidade']);
+		$stmt->bindParam(':endereco_uf', $var['reg-uf']);
+		$stmt->bindParam(':endereco_cep', $var['reg-cep']);
+		$stmt->bindParam(':telefone', $var['reg-telefone']);
+		$stmt->bindParam(':situacao', $situacao);
+		$stmt->bindParam(':chave_nova_senha', $chave_nova_senha);
+		$stmt->bindParam(':chave_nova_senha_valida', $chave_nova_senha_valida);
+		
+		$result = $stmt->execute();
+		$count = $stmt->rowCount();
+		$data = $stmt->fetch(PDO::FETCH_ASSOC);	
+
+		if ($count == 0){
+			
+			$ret = [
+				"erro" => true,
+				"erro_desc" => 'Erro ao inserir o registro, contate o administrador!',
+			];
+			
+		}else{
+			
+			$email = $var['reg-email'];
+	
+			require_once 'PHPMailer/src/PHPMailer.php';
+			require_once 'PHPMailer/src/SMTP.php';
+			require_once 'PHPMailer/src/Exception.php';
+			
+			$mail = new PHPMailer(true);
+			try {
+				//Server settings
+				$mail->SMTPDebug = 0;
+				$mail->isSMTP();
+				$mail->Host = $GLOBALS['mail_host'];
+				$mail->SMTPAuth = $GLOBALS['mail_smtpauth'];
+				$mail->Username = $GLOBALS['mail_username'];
+				$mail->Password = $GLOBALS['mail_password'];
+				$mail->SMTPSecure = $GLOBALS['mail_smtpsecure'];
+				$mail->Port = $GLOBALS['mail_port'];
+
+				//Recipients
+				$mail->setFrom($GLOBALS['mail_from'], $GLOBALS['mail_from_name']);
+				$mail->addAddress($email);
+				$mail->addReplyTo('naoresponda@excior.com.br', 'Excior Inventário');
+				
+				//Content
+				$mail->isHTML(true);
+				$mail->Subject = 'Novo Cadastro';
+				
+				$token = auxValidarEmail($email);
+				if ($token['erro']){
+					
+					$ret = [
+						"erro" => true,
+						"erro_desc" => $token['erro_desc']
+					];
+					
+				} else {
+					
+					$body = '<!DOCTYPE html>';
+					$body .= '<html><head><title>Novo Cadastro</title></head><body>';
+					$body .= '<h3>Novo Cadastro - Sistema de Inventário.</h3>';
+					$body .= '<p>Para continuar com a ativaçao do cadastro e geraçao da nova senha, clique no link abaixo .</p>';
+					$body .= '<p><h3><a href="http://www.excior.com.br/inventario/php/recuperar.php?token=' . urlencode($token['chave']) . '">GERAR NOVA SENHA</a></h3></p>';	
+					$body .= '</body></html>';
+							
+					$mail->Body = $body;
+
+					$mail->send();
+
+					$ret = [
+						"erro" => false,
+						"erro_desc" => "Registro efetuado com sucesso, foi lhe enviado um e-mail de ativaçao da conta!"
+					];
+				
+				}
+				
+			} 
+			catch (Exception $e) 
+			{
+				$ret = [
+					"erro" => true,
+					"erro_desc" => 'Usuário cadastrado, mas houve erro ao enviar o e-mail com a nova senha, contate o administrador!'
+				];
+			}
+			
+		}
 		
 	}
 		
