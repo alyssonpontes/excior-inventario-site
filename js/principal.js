@@ -6,7 +6,8 @@ $( document ).ready(function() {
 		constrain_width: true, 
 		hover: false, 
 		gutter: 0, 
-		belowOrigin: false
+		belowOrigin: false,
+		coverTrigger: false
 	});
    
 	$('.modal').modal();
@@ -48,7 +49,7 @@ $('#trocar-nova-senha').on('click',function(){
 			
 			$.ajax({
 				type: 'POST',
-				url: 'php/metodos.php',
+				url: 'php/servico.php',
 				data: dados,
 				success: function(response) {
 					var obj = JSON.parse(response);

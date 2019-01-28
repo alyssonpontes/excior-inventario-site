@@ -18,7 +18,7 @@ $('#btnEntrar').on('click',function(){
 
 	$.ajax({
 		type: 'POST',
-		url: 'php/metodos.php',
+		url: 'php/servico.php',
 		data: usuario,
 		success: function(response) {
 			var obj = JSON.parse(response);
@@ -44,7 +44,7 @@ $('#btnEnviar').on('click',function(){
 	
 	$.ajax({
 		type: 'POST',
-		url: 'php/metodos.php',
+		url: 'php/servico.php',
 		data: dados,
 		success: function(response) {
 			var obj = JSON.parse(response);
@@ -93,7 +93,7 @@ $('#btnRegistrar').on('click',function(){
 		
 		$.ajax({
 			type: 'POST',
-			url: 'php/metodos.php',
+			url: 'php/servico.php',
 			data: dados,
 			success: function(response) {
 				var obj = JSON.parse(response);

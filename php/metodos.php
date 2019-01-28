@@ -7,14 +7,6 @@ require_once('dbconn.php');
 
 require_once('mailconn.php');
 
-if (isset($_POST['metodo'])){
-
-	$var = $_POST;
-	$comando = $_POST['metodo'] . '($var);';
-	eval($comando);
-
-}
-
 function validarUsuario($var){
 	
 	$email = $var['email'];
